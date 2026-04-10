@@ -1,6 +1,6 @@
 ﻿namespace Users.API.Models
 {
-    public class Users
+    public class User
     {
         public int UserId { get; set; }
         public string Username { get; set; } = default!;
