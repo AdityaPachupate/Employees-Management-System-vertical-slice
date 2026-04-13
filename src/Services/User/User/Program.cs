@@ -1,3 +1,4 @@
+using Carter;
 using Microsoft.EntityFrameworkCore;
 using Users.API.Data;
 
@@ -10,11 +11,19 @@ builder.Services.AddDbContext<UserDbContext>(options =>
     )
 );
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
+
+builder.Services.AddCarter();
+
 var app = builder.Build();
 
 
 
 
 // Configure the HTTP request pipeline
+app.MapCarter();
 
 app.Run();
