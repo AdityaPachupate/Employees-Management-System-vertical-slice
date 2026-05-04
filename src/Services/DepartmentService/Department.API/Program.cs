@@ -1,7 +1,10 @@
 using BuildingBlocks.Behaviors;
 using Department.API.Data;
 using Department.API.Features.CreateDepartment;
-// using Department.API.Features.Departments.GetDepartments;
+using Department.API.Features.GetDepartments;
+using Department.API.Features.GetDepartmentById;
+using Department.API.Features.UpdateDepartment;
+using Department.API.Features.DeleteDepartment;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,5 +39,9 @@ app.UseHttpsRedirection();
 
 // Map Endpoints
 app.MapCreateDepartmentEndpoint();
+app.MapGetDepartmentsEndpoint();
+app.MapGetDepartmentByIdEndpoint();
+app.MapUpdateDepartmentEndpoint();
+app.MapDeleteDepartmentEndpoint();
 
 app.Run();
