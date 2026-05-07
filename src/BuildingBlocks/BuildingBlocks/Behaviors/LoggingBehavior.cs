@@ -22,7 +22,6 @@ public class LoggingBehavior<TRequest, TResponse>
         {
             await logSender.SendLogAsync($"[START] Handle request={typeof(TRequest).Name}");
         }
-            typeof(TRequest).Name, typeof(TResponse).Name, request);
 
         var timer = new Stopwatch();
         timer.Start();
