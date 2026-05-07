@@ -1,17 +1,27 @@
-﻿using MediatR;
+using BuildingBlocks.Logging;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace BuildingBlocks.Behaviors;
 public class LoggingBehavior<TRequest, TResponse>
-    (ILogger<LoggingBehavior<TRequest, TResponse>> logger)
+    (ILogger<LoggingBehavior<TRequest, TResponse>> logger, IServiceProvider sp)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull, IRequest<TResponse>
     where TResponse : notnull
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
+        var logSender = sp.GetService<ILogSender>();
+
         logger.LogInformation("[START] Handle request={Request} - Response={Response} - RequestData={RequestData}",
+            typeof(TRequest).Name, typeof(TResponse).Name, request);
+        
+        if (logSender != null)
+        {
+            await logSender.SendLogAsync($"[START] Handle request={typeof(TRequest).Name}");
+        }
             typeof(TRequest).Name, typeof(TResponse).Name, request);
 
         var timer = new Stopwatch();
